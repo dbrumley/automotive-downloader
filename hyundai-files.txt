@@ -1,0 +1,6 @@
+https://www.hyundai.com/wsvc/ww/download.file.do?id=/content/hyundai/ww/data/opensource/data/CE-2022/sourceCode/info
+https://www.hyundai.com/wsvc/ww/download.file.do?id=/content/hyundai/ww/data/opensource/data/QV%20PE-2023/sourceCode/info
+https://www.hyundai.com/wsvc/ww/download.file.do?id=/content/hyundai/ww/data/opensource/data/NX4-2021/sourceCode/info
+https://www.hyundai.com/wsvc/ww/download.file.do?id=/content/hyundai/ww/data/opensource/data/CN7-HEV-PE-2023/sourceCode/info
+https://www.hyundai.com/wsvc/ww/download.file.do?id=/content/hyundai/ww/data/opensource/data/F9-2014/licenseCode/info
+https://www.hyundai.com/wsvc/ww/download.file.do?id=/content/hyundai/ww/data/opensource/data/SX2-2023/sourceCode/info

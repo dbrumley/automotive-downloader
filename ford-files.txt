@@ -1,0 +1,3 @@
+https://github.com/smartdevicelink/bson_c_lib/archive/refs/tags/1.2.5.tar.gz
+https://github.com/smartdevicelink/bson_c_lib/archive/refs/tags/1.2.5.tar.gz
+https://github.com/smartdevicelink/sdl_core/archive/refs/heads/master.zip

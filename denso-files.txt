@@ -1,0 +1,14 @@
+https://www.denso.com/global/en/-/media/global/opensource/tcu/honda/files/sourcecode_tcu_hg1_01.zip?la=en&rev=b5f58b1c6d5143f2a2c77eb0a0ae2482&hash=9A1E39F4E8354A1FB0192546897FD8AB
+https://www.denso.com/global/en/-/media/global/opensource/ivi/honda/files/sourcecode_fcb_iam_01.gz?la=en&rev=f29f13b63fc94d7caccb8fdeafb731c5&hash=4B6730EABA05472EBF8B5ED096EF077F
+https://www.denso.com/global/en/-/media/global/opensource/ivi/subaru/files/2021/01/sourcecodezip.001
+https://www.denso.com/global/en/-/media/global/opensource/ivi/subaru/files/2021/02/sourcecodezip.002
+https://www.denso.com/global/en/-/media/global/opensource/ivi/subaru/files/2021/03/sourcecodezip.003
+https://www.denso.com/global/en/-/media/global/opensource/ivi/subaru/files/2021/04/sourcecodezip.004
+https://www.denso.com/global/en/-/media/global/opensource/ivi/toyota/navi_2022model/files/01/source_code_zip.001
+https://www.denso.com/global/en/-/media/global/opensource/ivi/toyota/navi_2022model/files/02/source_code_zip.002
+https://www.denso.com/global/en/-/media/global/opensource/ivi/toyota/navi_2022model/files/03/source_code_zip.003
+https://www.denso.com/global/en/-/media/global/opensource/ivi/toyota/navi_2022model/files/04/source_code_zip.004
+https://www.denso.com/global/en/-/media/global/opensource/ivi/toyota/navi_2013model/files/sourcecode_to15001_00.zip?la=en&rev=2bef139e69564caa83e980d19c63b92e&hash=3AEE13E54A437A95A7F3C7E4E07C92FC
+https://www.denso-ten.com/support/source/oem/21/OSS_SOFT_PACK.zip
+https://www.denso-ten.com/support/source/oem/21/OSS_SOFT_PACK_1.zip
+https://www.denso.com/global/en/-/media/global/opensource/dcm/toyota/files/sourcecode_dcm_tg3us_02.zip?la=en&rev=14bb9006de3d4c41b46b40adbaf486d8&hash=96846AF149B4BB4F03C5E87B84B291E0

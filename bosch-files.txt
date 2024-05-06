@@ -1,0 +1,9 @@
+https://oss.bosch-cm.com/download/my/MY23_2022.22.6/Source_Code.zip
+https://oss.bosch-cm.com/download/Mitsubishi/5128_210730/OSS_DVD_Content.zip
+https://oss.bosch-cm.com/download/Nissan_AIVI/5526_211218/OSS_DVD_Content.zip
+https://oss.bosch-cm.com/download/Nissan_AIVI/4818_220204/OSS_DVD_Content.zip
+https://oss.bosch-cm.com/download/Renault_3.x/4902_210408/OSS_DVD_Content.zip
+https://oss.bosch-cm.com/download/suz_1890/OSS-DVD_Content-1890.zip
+https://oss.bosch-cm.com/download/alpine/OSS-DVD-Content-0046_170818.zip
+https://oss.bosch-cm.com/download/coach/OSS_DVD_19.2S2020.32.1.tar.bz2
+https://oss.bosch-cm.com/download/my19/GM_17_0B074_1.zip

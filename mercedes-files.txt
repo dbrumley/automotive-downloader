@@ -1,0 +1,2 @@
+https://github.com/mercedes-benz/vehicle-information-service/archive/refs/heads/master.zip
+https://github.com/mercedes-benz/roadC/archive/refs/heads/main.zip
