@@ -1,0 +1,179 @@
+diff --git a/Makefile.am b/Makefile.am
+index c94164f7..8b458b8b 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -258,7 +258,8 @@ src_connmand_CFLAGS = @DBUS_CFLAGS@ @GLIB_CFLAGS@ \
+ 				-DSTORAGEDIR=\""$(storagedir)\"" \
+ 				-DVPN_STORAGEDIR=\""$(vpn_storagedir)\"" \
+ 				-DCONFIGDIR=\""$(configdir)\"" \
+-				-I$(builddir)/src
++				-I$(builddir)/src \
++				-fsanitize=address,fuzzer -DFUZZ=1 -g
+ 
+ EXTRA_DIST = src/genbuiltin src/connman-dbus.conf src/connman-polkit.conf \
+ 				plugins/connman-nmcompat.conf \
+diff --git a/src/dnsproxy.c b/src/dnsproxy.c
+index 1db3eae9..4dda3f94 100644
+--- a/src/dnsproxy.c
++++ b/src/dnsproxy.c
+@@ -1947,7 +1947,11 @@ static int forward_dns_reply(unsigned char *reply, int reply_len, int protocol,
+ 
+ 	debug("Received %d bytes (id 0x%04x)", reply_len, dns_id);
+ 
+-	req = find_request(dns_id);
++	struct request_data _req;
++	memset(&_req, 0, sizeof(_req));
++	_req.append_domain = true;
++
++	req = &_req;
+ 	if (!req)
+ 		return -EINVAL;
+ 
+@@ -2009,7 +2013,7 @@ static int forward_dns_reply(unsigned char *reply, int reply_len, int protocol,
+ 					dns_class != ns_c_in) {
+ 				debug("Pass msg dns type %d class %d",
+ 					dns_type, dns_class);
+-				goto pass;
++				// goto pass;
+ 			}
+ 
+ 			/*
+@@ -2121,17 +2125,17 @@ static int forward_dns_reply(unsigned char *reply, int reply_len, int protocol,
+ 		}
+ 
+ 	pass:
+-		g_free(req->resp);
+-		req->resplen = 0;
++		// g_free(req->resp);
++		// req->resplen = 0;
+ 
+-		req->resp = g_try_malloc(reply_len);
+-		if (!req->resp)
+-			return -ENOMEM;
++		// req->resp = g_try_malloc(reply_len);
++		// if (!req->resp)
++		// 	return -ENOMEM;
+ 
+-		memcpy(req->resp, reply, reply_len);
+-		req->resplen = reply_len;
++		// memcpy(req->resp, reply, reply_len);
++		// req->resplen = reply_len;
+ 
+-		cache_update(data, reply, reply_len);
++		// cache_update(data, reply, reply_len);
+ 
+ 		g_free(new_reply);
+ 	}
+@@ -2145,28 +2149,28 @@ out:
+ 		}
+ 	}
+ 
+-	request_list = g_slist_remove(request_list, req);
++	// request_list = g_slist_remove(request_list, req);
+ 
+-	if (protocol == IPPROTO_UDP) {
+-		sk = get_req_udp_socket(req);
+-		if (sk < 0) {
+-			errno = -EIO;
+-			err = -EIO;
+-		} else
+-			err = sendto(sk, req->resp, req->resplen, 0,
+-				&req->sa, req->sa_len);
+-	} else {
+-		sk = req->client_sk;
+-		err = send(sk, req->resp, req->resplen, MSG_NOSIGNAL);
+-	}
++	// if (protocol == IPPROTO_UDP) {
++	// 	sk = get_req_udp_socket(req);
++	// 	if (sk < 0) {
++	// 		errno = -EIO;
++	// 		err = -EIO;
++	// 	} else
++	// 		err = sendto(sk, req->resp, req->resplen, 0,
++	// 			&req->sa, req->sa_len);
++	// } else {
++	// 	sk = req->client_sk;
++	// 	err = send(sk, req->resp, req->resplen, MSG_NOSIGNAL);
++	// }
+ 
+-	if (err < 0)
+-		debug("Cannot send msg, sk %d proto %d errno %d/%s", sk,
+-			protocol, errno, strerror(errno));
+-	else
+-		debug("proto %d sent %d bytes to %d", protocol, err, sk);
++	// if (err < 0)
++	// 	debug("Cannot send msg, sk %d proto %d errno %d/%s", sk,
++	// 		protocol, errno, strerror(errno));
++	// else
++	// 	debug("proto %d sent %d bytes to %d", protocol, err, sk);
+ 
+-	destroy_request_data(req);
++	// destroy_request_data(req);
+ 
+ 	return err;
+ }
+@@ -3974,3 +3978,47 @@ void __connman_dnsproxy_cleanup(void)
+ 
+ 	g_hash_table_destroy(partial_tcp_req_table);
+ }
++
++int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
++    if (Size < 40) return 0;
++
++    int protocol;
++
++    if ((*Data) % 2) {
++        protocol = IPPROTO_UDP;
++    } else {
++        protocol = IPPROTO_TCP;
++    }
++
++    Data++;
++    Size--;
++
++    int len = Size;
++    unsigned char *buf = malloc(len);
++    if (buf == NULL) return 0;
++
++    memcpy(buf, Data, len);
++
++	int offset = protocol_offset(protocol);
++	int header_len = offset + sizeof(struct domain_hdr);
++	char *ptr = (char *)buf + header_len;
++
++	*ptr = 4;
++	strcpy(ptr + 1, "aaaa.bbbb.com");
++
++    struct server_data *server = create_server(0, "gonzo", "127.0.0.1", protocol);
++    if (server == NULL) {
++        printf("failed to create server\n");
++        fflush(stdout);
++        int *x = NULL;
++        *x = 1234;
++        return 0;
++    }
++
++    forward_dns_reply(buf, len, protocol, server);
++
++    destroy_server(server);
++    free(buf);
++
++    return 0;
++}
+diff --git a/src/main.c b/src/main.c
+index 318bf02b..1efe6d9e 100644
+--- a/src/main.c
++++ b/src/main.c
+@@ -688,6 +688,7 @@ unsigned int connman_timeout_browser_launch(void)
+ 	return connman_settings.timeout_browserlaunch;
+ }
+ 
++#ifndef FUZZ
+ int main(int argc, char *argv[])
+ {
+ 	GOptionContext *context;
+@@ -870,3 +871,4 @@ int main(int argc, char *argv[])
+ 
+ 	return 0;
+ }
++#endif /* FUZZ */
